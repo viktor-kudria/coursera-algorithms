@@ -8,7 +8,7 @@ public class HelloWorld {
 
         String st;
         int n = Integer.parseInt(br.readLine());
-        UnionFind uf = new QuickFind(n);
+        UnionFind uf = new QuickUnion(n);
 
         String[] strs = new String[2];
         while ((st = br.readLine()) != null) {
