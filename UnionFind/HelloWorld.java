@@ -8,9 +8,9 @@ public class HelloWorld {
 
         String st;
         int n = Integer.parseInt(br.readLine());
-        UnionFind uf = new QuickUnion(n);
+        UnionFind uf = new WeightedQuickUnion(n);
 
-        String[] strs = new String[2];
+        String[] strs;
         while ((st = br.readLine()) != null) {
             strs = st.split(" ");
 
