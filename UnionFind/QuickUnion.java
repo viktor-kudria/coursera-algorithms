@@ -17,6 +17,7 @@ public class QuickUnion extends UnionFind {
 
     protected int getRoot(int i) {
         while (id[i] != i) {
+            id[i] = id[id[i]];
             i = id[i];
         }
 
