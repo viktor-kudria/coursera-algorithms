@@ -123,11 +123,11 @@ public class Deque<Item> implements Iterable<Item> {
 
     private void resize(int newSize) {
         Item[] copy = (Item[]) new Object[newSize];
-        int i = numberOfElements;
+        int i = 0;
         Iterator<Item> iterator = this.iterator();
 
         while (iterator.hasNext()) {
-            copy[--i] = iterator.next();
+            copy[i++] = iterator.next();
         }
 
         head = 0;
@@ -145,17 +145,17 @@ public class Deque<Item> implements Iterable<Item> {
         private int i = -1;
 
         public boolean hasNext() {
-            return i != head;
+            return i != tail;
         }
 
         public Item next() {
             if (!hasNext()) throw new java.util.NoSuchElementException();
             if (i == -1) {
-                i = tail;
-            } else if (i == 0) {
-                i = size - 1;
+                i = head;
+            } else if (i == size - 1) {
+                i = 0;
             } else {
-                i--;
+                i++;
             }
 
             return s[i];

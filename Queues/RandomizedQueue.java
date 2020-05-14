@@ -31,6 +31,8 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     // add the item
     public void enqueue(Item item) {
+        if (item == null) throw new IllegalArgumentException();
+
         if (size == capacity) {
             resize(capacity * 2);
         }
@@ -40,6 +42,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     // remove and return a random item
     public Item dequeue() {
+        if (isEmpty()) throw new java.util.NoSuchElementException();
         int index = StdRandom.uniform(size);
 
         Item item = s[index];
@@ -56,6 +59,8 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     // return a random item (but do not remove it)
     public Item sample() {
+        if (isEmpty()) throw new java.util.NoSuchElementException();
+
         return s[StdRandom.uniform(size)];
     }
 
@@ -65,14 +70,9 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     private void resize(int newCapacity) {
-        Item[] copy = (Item[])new Object[newCapacity];
+        Item[] copy = (Item[]) new Object[newCapacity];
 
-        int limit;
-        if (newCapacity > s.length) {
-            limit = s.length;
-        } else {
-          limit = newCapacity;
-        }
+        int limit = Math.min(newCapacity, s.length);
 
         for (int i = 0; i < limit; i++) {
             copy[i] = s[i];
@@ -97,10 +97,12 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         }
 
         public boolean hasNext() {
-            return n < indecies.length - 1;
+            return n < indecies.length;
         }
 
         public Item next() {
+            if (!hasNext()) throw new java.util.NoSuchElementException();
+
             return s[indecies[n++]];
         }
 
@@ -120,7 +122,10 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     public static void main(String[] args) {
         RandomizedQueue<Integer> queue = new RandomizedQueue<Integer>();
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 1; i < 100; i++) {
+            if (i % 3 == 0) {
+                queue.dequeue();
+            }
             queue.enqueue(i);
         }
 
@@ -140,6 +145,15 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         System.out.println("Dequeing:");
         while (!queue.isEmpty()) {
             System.out.println(queue.dequeue());
+        }
+
+        RandomizedQueue<Integer> integers = new RandomizedQueue<Integer>();
+        for (int i = 1; i <= 10; i++) {
+            integers.enqueue(i);
+        }
+
+        for (int i: integers) {
+            System.out.println(i);
         }
     }
 }
